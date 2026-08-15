@@ -1,0 +1,28 @@
+name: Read data
+
+on:
+ workflow_dispatch:
+
+jobs:
+ read:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Download the repo onto the runner
+       uses: actions/checkout@v4
+
+     - name: Install Python
+       uses: actions/setup-python@v5
+       with:
+         python-version: "3.12"
+
+     - name: Install pandas
+       run: pip install pandas
+
+     - name: Look at the data
+       run: |
+         python -c "
+         import pandas as pd
+         df = pd.read_csv('AIM Ahimsa Classification_Companies.csv')
+         print(f'{len(df)} rows, {len(df.columns)} columns')
+         print(df.head())
+         "
