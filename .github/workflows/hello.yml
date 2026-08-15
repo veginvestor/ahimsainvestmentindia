@@ -1,11 +1,11 @@
 name: Hello
 
-   on:
-     workflow_dispatch:
+on:
+  workflow_dispatch:
 
-   jobs:
-     say-hello:
-       runs-on: ubuntu-latest
-       steps:
-         - name: Say something
-           run: echo "The agent is alive."
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say something
+        run: echo "The agent is alive."
