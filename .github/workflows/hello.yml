@@ -2,10 +2,24 @@ name: Hello
 
 on:
   workflow_dispatch:
+    inputs:
+      mood:
+        description: "Pick one"
+        required: true
+        type: choice
+        options:
+          - cheerful
+          - grumpy
+      note:
+        description: "Anything you want to say"
+        required: false
+        type: string
 
 jobs:
   say-hello:
     runs-on: ubuntu-latest
     steps:
       - name: Say something
-        run: echo "The agent is alive."
+        run: |
+          echo "Mood: ${{ inputs.mood }}"
+          echo "Note: ${{ inputs.note }}"
