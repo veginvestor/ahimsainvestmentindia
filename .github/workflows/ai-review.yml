@@ -1,0 +1,44 @@
+name: AI review
+
+on:
+  workflow_dispatch:
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download the repo onto the runner
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Cut a small slice of the data
+        run: |
+          mkdir -p work
+          python -c "
+          import pandas as pd
+          df = pd.read_csv('data/AIM_Ahimsa_Classification_Companies.csv')
+          slice_ = df[df['Basic Industry'] == 'Edible Oil']
+          slice_.to_csv('work/slice.csv', index=False)
+          print(f'Sliced {len(slice_)} companies')
+          "
+
+      - name: Ask the model
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python scripts/run_prompt.py \
+            --prompt prompts/ahimsa-consistency.md \
+            --model "qwen/qwen3-coder:free" \
+            --data work/slice.csv \
+            --mode review \
+            --context-file data/AIM_Investment_Curation_Framework.md
+
+      - name: Print the report
+        run: cat reports/*.md
