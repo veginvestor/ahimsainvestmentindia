@@ -1,0 +1,4 @@
+pandas>=2.2
+requests>=2.32
+ddgs>=9.0
+PyYAML>=6.0
