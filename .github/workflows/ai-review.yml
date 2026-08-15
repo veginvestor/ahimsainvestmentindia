@@ -35,7 +35,7 @@ jobs:
         run: |
           python scripts/run_prompt.py \
             --prompt prompts/ahimsa-consistency.md \
-            --model "qwen/qwen3-coder:free" \
+            --model "google/gemma-4-26b-a4b-it:free" \
             --data work/slice.csv \
             --mode review \
             --context-file data/AIM_Investment_Curation_Framework.md
