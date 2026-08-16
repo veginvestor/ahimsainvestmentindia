@@ -23,7 +23,7 @@ jobs:
          echo "Total number of companies"
          python -c "
          import pandas as pd
-         df = pd.read_csv('data/AIM Ahimsa Classification_Companies.csv')
+         df = pd.read_csv('data/companies.csv')
          print(f'{len(df)} rows, {len(df.columns)} columns')
          echo "Few companies"
          print(df.head())
